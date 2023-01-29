@@ -3,6 +3,9 @@
 ## Load installation configuration
 source config.sh || exit 1
 
+## Detect OS
+os=$(utils/os.sh) || exit 1
+
 # Install oh-my-zsh
 
 ## Install oh-my-zsh, if not already installed
@@ -34,6 +37,13 @@ sed -i '' '89s/^# \(fi\)$/\1/' $zshrc_file
 echo "  -> .zshrc profile set $CHECK_EMOTE"
 
 ## Put custom scripts
+
+### Construct the 1_homebrew.sh script
+if [[ $os == 'mac' ]]; then
+  echo 'eval "$(brew shellenv)"' > oh-my-zsh/custom/1_homebrew.zsh
+else
+  echo '' > oh-my-zsh/custom/1_homebrew.zsh
+fi
 
 ### Construct the 2_cp_aliases.sh script
 echo 'CP_HOME='$CP_HOME > oh-my-zsh/custom/2_cp_aliases.zsh

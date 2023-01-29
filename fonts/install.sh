@@ -3,16 +3,16 @@
 ## Load installation configuration
 source config.sh || exit 1
 
-# Install a Nerd Font
-
 ## Detect OS
 os=$(utils/os.sh) || exit 1
 
+# Install a Nerd Font
+
 ## Construct the system font directory based on OS
 if [[ $os == 'mac' ]]; then
-font_directory=$HOME'/Library/Fonts'
+  font_directory=$HOME'/Library/Fonts'
 else
-font_directory=$HOME'/.local/share/fonts'
+  font_directory=$HOME'/.local/share/fonts'
 fi
 
 ## Create the font directory if it doesn't already exist

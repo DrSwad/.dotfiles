@@ -21,7 +21,7 @@ if [[ $os == 'mac' ]]; then
   ## Setup iTerm2
   echo "-> Configure iTerm2:"
   echo "  -> 1. Make iTerm2 the default terminal (from the 'iTerm2' dropdown menu)."
-  echo "  -> 2. Import the 'drswad.json' profile from '$(dirname $0)/terminal_setup/mac' and make it the default one."
+  echo "  -> 2. Import the 'drswad.json' profile from '$(dirname $0)/mac' and make it the default one."
   echo ""
   read -s -k '?  Once configured, press any key to continue...'
   echo ' '$CHECK_EMOTE
