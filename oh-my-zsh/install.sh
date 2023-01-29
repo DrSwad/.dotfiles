@@ -38,16 +38,24 @@ echo "  -> .zshrc profile set $CHECK_EMOTE"
 
 ## Put custom scripts
 
-### Construct the 1_homebrew.sh script
+### Construct the 1_homebrew.zsh script
 if [[ $os == 'mac' ]]; then
   echo 'eval "$(brew shellenv)"' > oh-my-zsh/custom/1_homebrew.zsh
 else
   echo '' > oh-my-zsh/custom/1_homebrew.zsh
 fi
 
-### Construct the 2_cp_aliases.sh script
+### Construct the 2_cp_aliases.zsh script
 echo 'CP_HOME='$CP_HOME > oh-my-zsh/custom/2_cp_aliases.zsh
 echo 'CP_SETUP='$CP_SETUP >> oh-my-zsh/custom/2_cp_aliases.zsh
+
+### Construct the python_binaries.zsh script
+if ! type "pyenv" &> /dev/null; then
+  echo '' > oh-my-zsh/custom/python_binaries.zsh
+else
+  echo '# Python binaries' > oh-my-zsh/custom/python_binaries.zsh
+  echo 'export PATH=$(pyenv root)/shims:$PATH' >> oh-my-zsh/custom/python_binaries.zsh
+fi
 
 ### Finally, put all the custom scripts, theme and plugins
 rsync -a --delete oh-my-zsh/custom/ $ZSH_CUSTOM/ || exit 1
