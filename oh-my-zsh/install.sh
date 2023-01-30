@@ -38,25 +38,29 @@ echo "  -> .zshrc profile set $CHECK_EMOTE"
 
 ## Put custom scripts
 
+### Put all the custom scripts, theme and plugins
+rsync -a --delete oh-my-zsh/custom/ $ZSH_CUSTOM/ || exit 1
+echo "  -> Custom scripts, theme and plugins set $CHECK_EMOTE"
+
 ### Construct the 1_homebrew.zsh script
 if [[ $os == 'mac' ]]; then
-  echo 'eval "$(brew shellenv)"' > oh-my-zsh/custom/1_homebrew.zsh
+  if [ -d '/opt/homebrew/bin/brew' ]; then
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' > $ZSH_CUSTOM/1_homebrew.zsh
+  else
+    echo 'eval "$(/usr/local/bin/brew shellenv)"' > $ZSH_CUSTOM/1_homebrew.zsh
+  fi
 else
-  echo '' > oh-my-zsh/custom/1_homebrew.zsh
+  echo '' > $ZSH_CUSTOM/1_homebrew.zsh
 fi
 
 ### Construct the 2_cp_aliases.zsh script
-echo 'CP_HOME='$CP_HOME > oh-my-zsh/custom/2_cp_aliases.zsh
-echo 'CP_SETUP='$CP_SETUP >> oh-my-zsh/custom/2_cp_aliases.zsh
+echo 'CP_HOME='$CP_HOME > $ZSH_CUSTOM/2_cp_aliases.zsh
+echo 'CP_SETUP='$CP_SETUP >> $ZSH_CUSTOM/2_cp_aliases.zsh
 
-### Construct the python_binaries.zsh script
+### Construct the python_binaries.zsh script, only if pyenv is installed
 if ! type "pyenv" &> /dev/null; then
-  echo '' > oh-my-zsh/custom/python_binaries.zsh
+  echo '' > $ZSH_CUSTOM/python_binaries.zsh
 else
-  echo '# python binaries' > oh-my-zsh/custom/python_binaries.zsh
-  echo 'export PATH=$(pyenv root)/shims:$PATH' >> oh-my-zsh/custom/python_binaries.zsh
+  echo '# python binaries' > $ZSH_CUSTOM/python_binaries.zsh
+  echo 'export PATH=$(pyenv root)/shims:$PATH' >> $ZSH_CUSTOM/python_binaries.zsh
 fi
-
-### Finally, put all the custom scripts, theme and plugins
-rsync -a --delete oh-my-zsh/custom/ $ZSH_CUSTOM/ || exit 1
-echo "  -> Custom scripts, theme and plugins set $CHECK_EMOTE"
