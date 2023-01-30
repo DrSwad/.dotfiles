@@ -44,7 +44,7 @@ echo "  -> Custom scripts, theme and plugins set $CHECK_EMOTE"
 
 ### Construct the 1_homebrew.zsh script
 if [[ $os == 'mac' ]]; then
-  if [ -d '/opt/homebrew/bin/brew' ]; then
+  if [ -d '/opt/homebrew/bin' ]; then
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' > $ZSH_CUSTOM/1_homebrew.zsh
   else
     echo 'eval "$(/usr/local/bin/brew shellenv)"' > $ZSH_CUSTOM/1_homebrew.zsh
