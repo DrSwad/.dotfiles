@@ -27,6 +27,8 @@ M.mason = {
 
 -- git support in nvimtree
 M.nvimtree = {
+  open_on_setup = true,
+
   git = {
     enable = true,
   },

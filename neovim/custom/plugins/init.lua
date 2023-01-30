@@ -42,6 +42,14 @@ local plugins = {
     end,
   },
 
+  -- Competitive Programming Helper
+  ["DrSwad/cph.nvim"] = {
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("cph").setup({})
+    end,
+  },
+
   -- remove plugin
   -- ["hrsh7th/cmp-path"] = false,
 }

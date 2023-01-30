@@ -53,7 +53,7 @@ echo 'CP_SETUP='$CP_SETUP >> oh-my-zsh/custom/2_cp_aliases.zsh
 if ! type "pyenv" &> /dev/null; then
   echo '' > oh-my-zsh/custom/python_binaries.zsh
 else
-  echo '# Python binaries' > oh-my-zsh/custom/python_binaries.zsh
+  echo '# python binaries' > oh-my-zsh/custom/python_binaries.zsh
   echo 'export PATH=$(pyenv root)/shims:$PATH' >> oh-my-zsh/custom/python_binaries.zsh
 fi
 

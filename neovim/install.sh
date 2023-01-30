@@ -3,6 +3,9 @@
 ## Load installation configuration
 source config.sh || exit 1
 
+## Detect OS
+os=$(utils/os.sh) || exit 1
+
 # Handle Neovim
 
 ## Make sure Neovim is installed
@@ -19,6 +22,20 @@ read -s -k '?-> Once ensured, press any key to continue...'
 echo ' '$CHECK_EMOTE
 
 # Handle NvChad
+
+## Make sure ripgrep is installed
+if ! type "rg" &> /dev/null; then
+  echo "-> Installing ripgrep... $WRENCH_EMOTE\n"
+  if [[ $os == 'mac' ]]; then
+    brew install ripgrep
+  else
+    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+    sudo dpkg -i ripgrep_13.0.0_amd64.deb
+  fi
+  echo "\n-> ripgrep installed $CHECK_EMOTE"
+else
+  echo "-> ripgrep already installed $CHECK_EMOTE"
+fi
 
 ## Install NvChad, if not installed already
 if [ -d "$HOME/.config/nvim/.git" ]; then
