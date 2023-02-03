@@ -35,7 +35,10 @@ if ! type "zoxide" &> /dev/null; then
   else
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
   fi
-  echo "\n-> zoxide installed $CHECK_EMOTE"
+  rm ~/.zcompdump*
+  echo ''
+  read -s -k '?-> (IMPORTANT) Make sure to run `compinit` to complete zoxide installation once this script is done. Press any key to continue...'
+  echo "  $CHECK_EMOTE"
 else
   echo "-> zoxide already installed $CHECK_EMOTE"
 fi
