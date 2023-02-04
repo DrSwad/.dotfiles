@@ -16,14 +16,17 @@ utils/zsh.sh || exit 1
 ## Run the specialized installation scripts
 if [[ $MODE == "FULL" ]]; then
   terminal_setup/install.sh || exit 1
-fi
-fonts/install.sh || exit 1
-if [[ $MODE == "FULL" ]]; then
   oh-my-zsh/install.sh || exit 1
-else
+  tmux/install.sh || exit 1
+fi
+
+if [[ $MODE == "CP" ]]; then
   zshrc_file=$HOME'/.zshrc'
   echo "\nCP_HOME=$CP_HOME" >> $zshrc_file
   echo "CP_SETUP=$CP_SETUP" >> $zshrc_file
+  echo "\n-> CP aliases set in $zshrc_file $CHECK_EMOTE"
 fi
+
+fonts/install.sh || exit 1
 neovim/install.sh || exit 1
 cp_setup/install.sh || exit 1
