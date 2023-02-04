@@ -17,6 +17,7 @@ utils/zsh.sh || exit 1
 if [[ $MODE == "FULL" ]]; then
   terminal_setup/install.sh || exit 1
   oh-my-zsh/install.sh || exit 1
+  mosh/install.sh || exit 1
   tmux/install.sh || exit 1
 fi
 
