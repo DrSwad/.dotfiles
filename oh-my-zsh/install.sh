@@ -34,6 +34,12 @@ sed -i '' '87s/^# \(else\)$/\1/' $zshrc_file
 sed -i '' "88s/^# \(  export EDITOR=\)'mvim'$/\1'nvim'/" $zshrc_file
 sed -i '' '89s/^# \(fi\)$/\1/' $zshrc_file
 
+### Put the zoxide init command at the bottom of .zshrc
+zoxide_init_cmd='eval "$(zoxide init zsh)"'
+if ! grep -q "$zoxide_init_cmd" "$zshrc_file" ; then
+  echo "\n$zoxide_init_cmd" >> $zshrc_file
+fi
+
 echo "  -> .zshrc profile set $CHECK_EMOTE"
 
 ## Put custom scripts
