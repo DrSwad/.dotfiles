@@ -18,3 +18,11 @@ if [[ $os == 'mac' ]]; then
     echo "-> mosh already installed $CHECK_EMOTE"
   fi
 fi
+
+## Add mosh-server to the path in .zshenv file
+zshenv_file=$HOME'/.zshenv'
+mosh_server_cmd="export PATH=$(which mosh-server):\$PATH"
+if [ -f $zshenv_file ] && grep -q "$mosh_server_cmd" "$zshenv_file"; then
+else
+  echo "$mosh_server_cmd" >> $zshenv_file
+fi
