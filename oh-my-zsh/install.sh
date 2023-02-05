@@ -19,6 +19,16 @@ fi
 
 # Setup oh-my-zsh
 
+## Add mosh-server to the path in .zshenv file
+zshenv_file=$HOME'/.zshenv'
+if [ -f $zshenv_file ] && grep -q "$mosh_server_cmd" "$zshenv_file"; then
+else
+  mosh_server_cmd='export PATH=/usr/local/bin:$PATH'
+  echo "$mosh_server_cmd" >> $zshenv_file
+fi
+
+## Configure the .zshrc file
+
 zshrc_file=$HOME'/.zshrc'
 
 ## Set the theme
