@@ -1,2 +1,2 @@
 # python binaries
-export PATH=$(pyenv root)/shims:$PATH
+export PATH=$HOME/Library/Python/[!/]*/bin:$PATH
