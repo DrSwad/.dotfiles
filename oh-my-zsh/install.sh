@@ -67,10 +67,10 @@ echo 'CP_SETUP='$CP_SETUP >> $ZSH_CUSTOM/2_cp_aliases.zsh
 
 ### Construct the pyenv.zsh script, only if pyenv is installed
 if ! type "pyenv" &> /dev/null; then
-  echo '' > $ZSH_CUSTOM/python_binaries.zsh
+  echo '' > $ZSH_CUSTOM/pyenv.zsh
 else
-  echo '# python binaries' > $ZSH_CUSTOM/python_binaries.zsh
-  echo 'export PATH=$(pyenv root)/shims:$PATH' >> $ZSH_CUSTOM/python_binaries.zsh
+  echo '# python binaries' > $ZSH_CUSTOM/pyenv.zsh
+  echo 'export PATH=$(pyenv root)/shims:$PATH' >> $ZSH_CUSTOM/pyenv.zsh
 fi
 
 ### Construct the python_binaries.zsh script, only if on mac
