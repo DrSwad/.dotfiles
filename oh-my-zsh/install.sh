@@ -76,7 +76,9 @@ fi
 ### Construct the python_binaries.zsh script, only if on mac
 if [[ $os == 'mac' ]]; then
   echo '# python binaries' > $ZSH_CUSTOM/python_binaries.zsh
-  echo 'export PATH=$HOME/Library/Python/[!/]*/bin:$PATH' >> $ZSH_CUSTOM/python_binaries.zsh
+  find $HOME/Library/Python/[!/]*/bin -type d | while read -r line; do
+    echo 'export PATH='$line':$PATH' >> $ZSH_CUSTOM/python_binaries.zsh
+  done
 else
   echo '' > $ZSH_CUSTOM/python_binaries.zsh
 fi
