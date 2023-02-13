@@ -1,7 +1,7 @@
 # g++
-CPLUS_INCLUDE_PATH=/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12:/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22:/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/backward:/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22/12/include:/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22/12/include-fixed:/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/usr/include:/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/System/Library/Frameworks:$CP_SETUP/include
+CPLUS_INCLUDE_PATH=$BREW_CELLAR/gcc/12.2.0/include/c++/12:$BREW_CELLAR/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22:$BREW_CELLAR/gcc/12.2.0/include/c++/12/backward:$BREW_CELLAR/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22/12/include:$BREW_CELLAR/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22/12/include-fixed:/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/usr/include:/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/System/Library/Frameworks:$CP_SETUP/include
 export CPLUS_INCLUDE_PATH
-export PATH=/opt/homebrew/Cellar/gcc/12.2.0/bin:$PATH
+export PATH=$BREW_CELLAR/gcc/12.2.0/bin:$PATH
 
 # cpg++
 cpg++() {
