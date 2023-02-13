@@ -42,13 +42,12 @@ local plugins = {
     end,
   },
 
-  -- Competitive Programming Helper
-  ["DrSwad/cph.nvim"] = {
-    requires = "nvim-lua/plenary.nvim",
+	['xeluxee/competitest.nvim'] = {
+    requires = 'MunifTanjim/nui.nvim',
     config = function()
-      require("cph").setup({})
+      require'competitest'.setup()
     end,
-  },
+  }
 
   -- remove plugin
   -- ["hrsh7th/cmp-path"] = false,

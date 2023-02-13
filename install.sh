@@ -30,4 +30,5 @@ fi
 
 fonts/install.sh || exit 1
 neovim/install.sh || exit 1
+clangd/install.sh || exit 1
 cp_setup/install.sh || exit 1
