@@ -62,8 +62,8 @@ else
 fi
 
 ### Construct the 2_cp_aliases.zsh script
-echo 'CP_HOME='$CP_HOME > $ZSH_CUSTOM/2_cp_aliases.zsh
-echo 'CP_SETUP='$CP_SETUP >> $ZSH_CUSTOM/2_cp_aliases.zsh
+echo 'export CP_HOME='$CP_HOME > $ZSH_CUSTOM/2_cp_aliases.zsh
+echo 'export CP_SETUP='$CP_SETUP >> $ZSH_CUSTOM/2_cp_aliases.zsh
 
 ### Construct the pyenv.zsh script, only if pyenv is installed
 if ! type "pyenv" &> /dev/null; then

@@ -45,7 +45,34 @@ local plugins = {
 	['xeluxee/competitest.nvim'] = {
     requires = 'MunifTanjim/nui.nvim',
     config = function()
-      require'competitest'.setup()
+      require'competitest'.setup {
+        testcases_directory = "/.cph",
+        testcases_use_single_file = true,
+        save_all_files = true,
+        compile_directory = "/.cph",
+        compile_command = {
+          cpp = {
+            exec = "g++",
+            args = {
+              "$(FABSPATH)",
+              "-o", "$(FNOEXT)",
+              "-std=c++20",
+              "-O2",
+              "-Wl,-stack_size,0x20000000",
+              "-include",
+              vim.env.CP_SETUP .. "/include/debug.h"
+            }
+          },
+        },
+        running_directory = "/.cph",
+        run_command = {
+          cpp = { exec = "./$(FNOEXT)" },
+        },
+        view_output_diff = true,
+        template_file = {
+          cpp = vim.env.CP_HOME .. "/Resources/Libraries/Personal Library/template.cpp",
+        },
+      }
     end,
   }
 
