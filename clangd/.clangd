@@ -1,10 +1,10 @@
 CompileFlags:
   Add: [
     '-I$BREW_CELLAR/gcc/12.2.0/include/c++/12',
-    '-I$BREW_CELLAR/gcc/12.2.0/include/c++/12/aarch64-apple-darwin22',
+    '-I$BREW_CELLAR/gcc/12.2.0/include/c++/12/$ARCH_DIR',
     '-I$BREW_CELLAR/gcc/12.2.0/include/c++/12/backward',
-    '-I$BREW_CELLAR/gcc/12.2.0/lib/gcc/current/gcc/aarch64-apple-darwin22/12/include',
-    '-I$BREW_CELLAR/gcc/12.2.0/lib/gcc/current/gcc/aarch64-apple-darwin22/12/include-fixed',
+    '-I$BREW_CELLAR/gcc/12.2.0/lib/gcc/current/gcc/$ARCH_DIR/12/include',
+    '-I$BREW_CELLAR/gcc/12.2.0/lib/gcc/current/gcc/$ARCH_DIR/12/include-fixed',
     '-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/usr/include',
     '-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/System/Library/Frameworks',
     '-I$CP_SETUP/include',

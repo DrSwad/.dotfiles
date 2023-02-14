@@ -66,7 +66,9 @@ echo 'export CP_HOME='$CP_HOME > $ZSH_CUSTOM/2_cp_aliases.zsh
 echo 'export CP_SETUP='$CP_SETUP >> $ZSH_CUSTOM/2_cp_aliases.zsh
 
 ### Construct the 3_g++.zsh script
+arch_dir=$(ls $(brew --cellar)/gcc/12.2.0/lib/gcc/current/gcc | head -1)
 sed -i '' "s#\$BREW_CELLAR#$(brew --cellar)#g" $ZSH_CUSTOM/3_g++.zsh
+sed -i '' "s#\$ARCH_DIR#$arch_dir#g" $ZSH_CUSTOM/3_g++.zsh
 
 ### Construct the pyenv.zsh script, only if pyenv is installed
 if ! type "pyenv" &> /dev/null; then
