@@ -83,6 +83,20 @@ local plugins = {
     end,
   },
 
+  ['anuvyklack/pretty-fold.nvim'] = {
+     config = function()
+        require('pretty-fold').setup{
+           fill_char = '•',
+           sections = {
+              left = {
+                 '+', function() return string.rep('-', vim.v.foldlevel) end,
+                 ' ', 'number_of_folded_lines', ':', 'content',
+              }
+           }
+        }
+     end
+  },
+
   -- remove plugin
   -- ["hrsh7th/cmp-path"] = false,
 }
