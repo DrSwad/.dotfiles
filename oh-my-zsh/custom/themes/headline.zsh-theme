@@ -73,6 +73,7 @@ IS_SSH=$? # 0=true, 1=false
 # The style aliases for ANSI SGR codes (defined above) can be used there too
 
 # Info segments
+HEADLINE_DO_VENV=true
 HEADLINE_DO_USER=true
 HEADLINE_DO_HOST=true
 HEADLINE_DO_PATH=true
@@ -80,6 +81,7 @@ HEADLINE_DO_GIT_BRANCH=true
 HEADLINE_DO_GIT_STATUS=true
 
 # Info symbols (optional)
+HEADLINE_VENV_PREFIX=''
 # HEADLINE_USER_PREFIX='' # consider " "
 # HEADLINE_HOST_PREFIX='' # consider " "
 HEADLINE_USER_PREFIX=' ' # consider " "
@@ -90,8 +92,9 @@ HEADLINE_PATH_PREFIX=' ' # consider " "
 HEADLINE_BRANCH_PREFIX=' ' # consider " "
 
 # Info joints
-HEADLINE_USER_BEGIN=''
-if [ $IS_SSH = 0 ]; then HEADLINE_USER_BEGIN='=> '; fi
+HEADLINE_VENV_BEGIN=''
+if [ $IS_SSH = 0 ]; then HEADLINE_VENV_BEGIN='=> '; fi
+HEADLINE_VENV_TO_USER=' - '
 HEADLINE_USER_TO_HOST=' @ '
 HEADLINE_HOST_TO_PATH=': '
 HEADLINE_PATH_TO_BRANCH=' | ' # only used when no padding between <path> and <branch>
@@ -111,6 +114,7 @@ HEADLINE_TRUNC_PREFIX='...' # shown where <path> or <branch> is truncated, consi
 # Info styles
 HEADLINE_STYLE_DEFAULT='' # style applied to entire info line
 HEADLINE_STYLE_JOINT=$light_black
+HEADLINE_STYLE_VENV=$bold$green
 HEADLINE_STYLE_USER=$bold$red
 HEADLINE_STYLE_HOST=$bold$yellow
 HEADLINE_STYLE_PATH=$bold$blue
@@ -130,6 +134,7 @@ HEADLINE_LINE_CHAR='_' # repeated for line above information
 
 # Separator styles
 HEADLINE_STYLE_JOINT_LINE=$HEADLINE_STYLE_JOINT
+HEADLINE_STYLE_VENV_LINE=$HEADLINE_STYLE_VENV
 HEADLINE_STYLE_USER_LINE=$HEADLINE_STYLE_USER
 HEADLINE_STYLE_HOST_LINE=$HEADLINE_STYLE_HOST
 HEADLINE_STYLE_PATH_LINE=$HEADLINE_STYLE_PATH
@@ -251,7 +256,19 @@ headline_exit_meaning() { # (num)
   esac
 }
 
-
+# Python virtual environment name
+headline_python_env() {
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    echo "$(basename "$VIRTUAL_ENV")"
+  elif command -v pyenv >/dev/null 2>&1; then
+    local pyenv_version=$(pyenv version-name 2>/dev/null)
+    if [[ -n "$pyenv_version" && "$pyenv_version" != "system" ]]; then
+      if [[ ! "$pyenv_version" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+        echo "$pyenv_version"
+      fi
+    fi
+  fi
+}
 
 # Git command wrapper
 headline_git() {
@@ -375,7 +392,8 @@ headline_precmd() {
   local err=$?
 
   # Information
-  local user_str host_str path_str branch_str status_str
+  local venv_str user_str host_str path_str branch_str status_str
+  [[ $HEADLINE_DO_VENV == 'true' ]] && venv_str=$(headline_python_env)
   [[ $HEADLINE_DO_USER == 'true' ]] && user_str=$USER
   [[ $HEADLINE_DO_HOST == 'true' ]] && host_str=$(hostname -s)
   [[ $HEADLINE_DO_PATH == 'true' ]] && path_str=$(print -rP '%~')
@@ -414,19 +432,28 @@ headline_precmd() {
   fi
 
   # Trimming
-  local joint_len=$(( ${#HEADLINE_USER_BEGIN} + ${#HEADLINE_USER_TO_HOST} + ${#HEADLINE_HOST_TO_PATH} + ${#HEADLINE_PATH_TO_BRANCH} ))
+  local joint_len=$(( ${#HEADLINE_VENV_BEGIN} + ${#HEADLINE_VENV_TO_USER} + ${#HEADLINE_USER_TO_HOST} + ${#HEADLINE_HOST_TO_PATH} + ${#HEADLINE_PATH_TO_BRANCH} ))
   local path_min_len=$(( ${#path_str} + ${#HEADLINE_PATH_PREFIX} > 25 ? 25 : ${#path_str} + ${#HEADLINE_PATH_PREFIX} ))
   len=$(( $_HEADLINE_LEN_REMAIN - $path_min_len - $joint_len ))
   if (( $len < 2 )); then
-    user_str=''; host_str=''
-  elif (( $len < ${#user_str} + ${#host_str} )); then
+    venv_str=''; user_str=''; host_str=''
+  elif (( $len < ${#venv_str} + ${#user_str} + ${#host_str} )); then
+    venv_str="${venv_str:0:1}"
     user_str="${user_str:0:1}"
     host_str="${host_str:0:1}"
   fi
 
+  # Venv
+  if (( ${#venv_str} )); then
+    _headline_part JOINT "$HEADLINE_VENV_BEGIN" left
+    _headline_part VENV "$HEADLINE_VENV_PREFIX$venv_str" left
+  fi
+
   # User
   if (( ${#user_str} )); then
-    _headline_part JOINT "$HEADLINE_USER_BEGIN" left
+    if (( ${#_HEADLINE_INFO_LEFT} )); then
+      _headline_part JOINT "$HEADLINE_VENV_TO_USER" left
+    fi
     _headline_part USER "$HEADLINE_USER_PREFIX$user_str" left
   fi
 
